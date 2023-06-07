@@ -51,8 +51,6 @@ function App() {
   return (
     <div>
       <h2>FRUIT CLASSIFIER</h2>
-      <button>UPLOAD IMAGE</button>
-
       <ImageForm setresult={setresult} />
       <h1>
         This fruit is most likely:{" "}
