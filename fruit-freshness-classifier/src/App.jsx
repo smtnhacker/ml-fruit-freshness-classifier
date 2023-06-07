@@ -54,7 +54,10 @@ function App() {
       <button>UPLOAD IMAGE</button>
 
       <ImageForm setresult={setresult} />
-      <h1>This fruit is most likely: {result > 0.5 ? "rotten" : "fresh"}</h1>
+      <h1>
+        This fruit is most likely:{" "}
+        {result === "" ? "" : result > 0.5 ? "fresh" : "rotten"}
+      </h1>
     </div>
   );
 }
