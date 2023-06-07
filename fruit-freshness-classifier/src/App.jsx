@@ -6,6 +6,7 @@ const ImageForm = ({ setresult }) => {
   const [image, setImage] = useState(null);
 
   const handleSubmit = async (event) => {
+    setresult("");
     event.preventDefault();
 
     const imageInput = event.target.elements.image.files[0];
