@@ -19,7 +19,7 @@ const ImageForm = ({ setresult }) => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/upload",
+        "https://fastapi-production-ea27.up.railway.app/upload",
         formData,
         {
           headers: {
@@ -53,7 +53,7 @@ function App() {
       <button>UPLOAD IMAGE</button>
 
       <ImageForm setresult={setresult} />
-      <h1>Response: {result}</h1>
+      <h1>This fruit is most likely: {result > 0.5 ? "rotten" : "fresh"}</h1>
     </div>
   );
 }
