@@ -12,16 +12,18 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  margin: auto;
   text-align: center;
 }
 
 .container {
-  padding: 5em 3em;
+  width: 380px;
   background: #060913;
   border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .form {
   position: relative;
@@ -71,18 +73,10 @@ h1 {
   letter-spacing: 2px;
 }
 
-p {
+p,span {
   color: #848b9a;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
 
 body {
   display: flex;
@@ -90,3 +84,45 @@ body {
   justify-content: center;
 }
 
+
+/* progress bar */
+
+.result {
+  margin-top: 2em;
+}
+
+
+.progress-bar {
+  position: relative;
+  height: 10px;
+  width: 300PX;
+  background: var(--grey);
+  border-radius: 25px;
+}
+
+.progress-fill {
+  position: absolute;
+  height: 10px;
+  width: 0%;
+  animation: progress-forward 3.3s infinite;
+  background: white;
+  border-radius: 15px;
+}
+
+@keyframes progress-forward {
+  0% {
+    width: 0%;
+  }
+  25% {
+    width: 50%;
+  }
+  50% {
+    width: 75%;
+  }
+  75% {
+    width: 85%;
+  }
+  100% {
+    width: 100%;
+  }
+} ;
