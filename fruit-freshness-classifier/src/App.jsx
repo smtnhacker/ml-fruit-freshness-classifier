@@ -56,7 +56,7 @@ function App() {
       <ImageForm setresult={setresult} />
       <h1>
         This fruit is most likely:{" "}
-        {result === "" ? "" : result > 0.5 ? "fresh" : "rotten"}
+        {result === "" ? "" : result > 0.5 ? "rotten" : "fresh"}
       </h1>
     </div>
   );
