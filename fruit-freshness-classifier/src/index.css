@@ -5,13 +5,74 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #060913;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.container {
+  padding: 5em 3em;
+  background: #060913;
+  border-radius: 20px;
+}
+.form {
+  position: relative;
+  width: 22rem;
+  height: 40vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  border: 2px dashed #848b9a;
+  border-radius: 15px;
+  margin-top: 2.1875rem;
+  cursor: pointer;
+  background: #111624a8;
+  transition: border-color 300ms ease-in-out;
+}
+
+.form:hover {
+  background: #111624;
+}
+
+
+output .image{
+  height: 180px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  position: relative;
+}
+
+output .image img{
+  height: 100%;
+  width: 100%;
+}
+
+output .image span {
+  position: absolute;
+  top: -4px;
+  right: 4px;
+  cursor: pointer;
+  font-size: 22px;
+  color: white;
+}
+
+h1 {
+  font-size: large;
+  letter-spacing: 2px;
+}
+
+p {
+  color: #848b9a;
 }
 
 a {
@@ -24,46 +85,8 @@ a:hover {
 }
 
 body {
-  margin: 0;
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  flex-direction: column;
+  justify-content: center;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
