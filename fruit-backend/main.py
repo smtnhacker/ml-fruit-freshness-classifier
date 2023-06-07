@@ -35,7 +35,7 @@ async def root():
 
 @app.post("/upload")
 async def upload_image(image: UploadFile = File(...)):
-    model = tf.keras.models.load_model("mymodelv1.2.h5")
+    model = tf.keras.models.load_model("mymodelv1.3.h5")
     contents = await image.read()
 
     img = Image.open(io.BytesIO(contents))

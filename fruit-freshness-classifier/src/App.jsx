@@ -1,15 +1,32 @@
 import "./App.css";
 import axios from "axios";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { AiFillFileImage } from 'react-icons/ai';
 
-const ImageForm = ({ setresult }) => {
+
+const ImageForm = () => {
+  const [result, setresult] = useState("");
   const [image, setImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false)
+
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    setIsLoading(true)
 
-    const imageInput = event.target.elements.image.files[0];
+    setresult("");
+    event.preventDefault();
+    const imageInput = fileInput.current.files[0];
     setImage(imageInput);
+
+    const output = document.querySelector("output")
+    let imageOutput = "";
+
+    console.log(imageInput)
+    imageOutput = `<div class="image">
+                <img src="${URL.createObjectURL(imageInput)}" alt="image">
+              </div>`
+
+    output.innerHTML = imageOutput;
 
     const formData = new FormData();
     formData.append("image", imageInput);
@@ -19,7 +36,7 @@ const ImageForm = ({ setresult }) => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/upload",
+        "https://fastapi-production-ea27.up.railway.app/upload",
         formData,
         {
           headers: {
@@ -34,26 +51,40 @@ const ImageForm = ({ setresult }) => {
     } catch (error) {
       console.error("Failed to upload image", error);
     }
+    setIsLoading(false)
   };
 
+
+  const fileInput = useRef(null)
+
+
+
+
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="file" name="image" accept="image/*" required />
-      <button type="submit">Submit</button>
-    </form>
+    <>
+      <div onClick={()=> fileInput.current.click()} className="form">
+        <output><AiFillFileImage size={130} fill="#848b9a" /></output>
+        <input onChange={handleSubmit} ref={fileInput} type="file" name="image" accept="image/*" required style={{display:"none"}}/>
+        <p>Upload image here</p>
+      </div>
+      <div className="result">
+        {isLoading ? 
+          (<div className="progress-bar"><div className="progress-fill"></div></div>)
+          : 
+          (<span>{result === "" ? "" : result > 0.5 ? "This fruit is most likely: rotten" : "This fruit is most likely: fresh"}</span>)}
+      </div>
+    </>
+
   );
 };
 
 function App() {
-  const [result, setresult] = useState("");
 
   return (
-    <div>
-      <h2>FRUIT CLASSIFIER</h2>
-      <button>UPLOAD IMAGE</button>
-
-      <ImageForm setresult={setresult} />
-      <h1>Response: {result}</h1>
+    <div className="container">
+      <h1>FRUIT CLASSIFIER</h1>
+      <span>Upload a photo of a fruit here to determine if it is rotten or not</span>
+      <ImageForm />  
     </div>
   );
 }
