@@ -83,7 +83,7 @@ function App() {
   return (
     <div className="container">
       <h1>FRUIT CLASSIFIER</h1>
-      <p>Upload a photo of a fruit here to determine if it is rotten or not</p>
+      <span>Upload a photo of a fruit here to determine if it is rotten or not</span>
       <ImageForm />  
     </div>
   );
