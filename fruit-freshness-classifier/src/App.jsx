@@ -1,7 +1,6 @@
 import "./App.css";
 import axios from "axios";
 import { useRef, useState } from "react";
-import { AiFillFileImage } from 'react-icons/ai';
 
 
 const ImageForm = () => {
@@ -63,7 +62,7 @@ const ImageForm = () => {
   return (
     <>
       <div onClick={()=> fileInput.current.click()} className="form">
-        <output><AiFillFileImage size={130} fill="#848b9a" /></output>
+        <output><img src="/image.svg" /></output>
         <input onChange={handleSubmit} ref={fileInput} type="file" name="image" accept="image/*" required style={{display:"none"}}/>
         <p>Upload image here</p>
       </div>
