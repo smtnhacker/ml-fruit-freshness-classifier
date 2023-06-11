@@ -1,13 +1,17 @@
 import "./App.css";
 import axios from "axios";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 
 const ImageForm = () => {
   const [result, setresult] = useState("");
   const [image, setImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false)
+  const vidRef = useRef()
+  const canRef = useRef()
 
+  const prodAPI = "https://fastapi-production-ea27.up.railway.app"
+  const devAPI = "http://localhost:8000"
 
   const handleSubmit = async (event) => {
     setIsLoading(true)
@@ -15,7 +19,7 @@ const ImageForm = () => {
     setresult("");
     event.preventDefault();
     const imageInput = fileInput.current.files[0];
-    setImage(imageInput);
+    // setImage(imageInput);
 
     const output = document.querySelector("output")
     let imageOutput = "";
@@ -33,9 +37,10 @@ const ImageForm = () => {
       console.log(key, value);
     }
 
+
     try {
       const response = await axios.post(
-        "https://fastapi-production-ea27.up.railway.app/upload",
+        `${prodAPI}/upload`,
         formData,
         {
           headers: {
@@ -45,7 +50,8 @@ const ImageForm = () => {
       );
 
       console.log("Image uploaded successfully", response);
-      console.log(`Prediction: ${response.data.predictions}`);
+      console.log(response.data.predictions[0]);
+      // setImage(response.data.frame)
       setresult(response.data.predictions[0]);
     } catch (error) {
       console.error("Failed to upload image", error);
@@ -56,7 +62,36 @@ const ImageForm = () => {
 
   const fileInput = useRef(null)
 
+  const processFrame = async (frame) => {
+    try {
+      const response = await axios.post(
+        `${devAPI}/stream`,
+        JSON.stringify({ frame: frame }),
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      )
+      setImage(response.data.frame)
+    } catch (err) {
+      // console.error(err)
+    }
+  }
 
+  useEffect(() => {
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        vidRef.current.srcObject = stream
+        vidRef.current.play()
+        setInterval(() => {
+          canRef.current.getContext('2d').drawImage(vidRef.current, 0, 0, canRef.current.width, canRef.current.height)
+          const frame = canRef.current.toDataURL('image/jpeg', 0.5)
+          processFrame(frame)
+        }, 1000/2)
+      })
+      .catch(err => console.error(err))
+  }, [])
 
 
   return (
@@ -72,6 +107,13 @@ const ImageForm = () => {
           : 
           (<span>{result === "" ? "" : result > 0.5 ? "This fruit is most likely: rotten" : "This fruit is most likely: fresh"}</span>)}
       </div>
+      <div>
+        <video ref={vidRef} style={{ display: 'none' }} />
+        <canvas ref={canRef} style={{ display: 'none' }}></canvas>
+      </div>
+      {image?
+        <img src={image} /> : 'loading stream...'
+      }
     </>
 
   );
