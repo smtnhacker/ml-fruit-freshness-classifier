@@ -72,7 +72,18 @@ function Stream({ API }) {
         <div>
             <video ref={vidRef} height="360" width="480" style={{ display: 'none' }} />
             <canvas ref={canRef} width={480} height={360} style={{ display: 'none' }} />
-            { image? <img src={image} style={{ border: `solid 3px rgb${getColor()}`}} /> : 'loading stream...' }
+            { image
+            ? <img src={image} style={{ border: `solid 3px rgb${getColor()}`}} /> 
+            : <div alt="Loading stream" style={{ 
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: '480px',
+                    height: '360px',
+                    border: 'solid 3px rgb(30, 30, 30)',
+                    marginBottom: '3px'
+                }}>Loading Stream</div> 
+            }
             <span style={{ display: 'block' }}>
                 { crazy ? '...' : label > 0.5 ? 'This is most likely: rotten' : 'This is most likely: fresh' }
             </span>
