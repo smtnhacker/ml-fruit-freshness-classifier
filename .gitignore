@@ -2,5 +2,9 @@
 *.png
 *.webp
 *.jpeg
+*.pyc
 
 myenv
+.ipynb_checkpoints/
+
+ignore_*
