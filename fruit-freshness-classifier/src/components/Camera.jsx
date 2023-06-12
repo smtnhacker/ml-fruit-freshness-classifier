@@ -40,12 +40,20 @@ function Camera({ API }) {
     }
 
     useEffect(() => {
+        let videoRef = null
         navigator.mediaDevices.getUserMedia({ video: true })
         .then(stream => {
+            videoRef = stream
             vidRef.current.srcObject = stream
             vidRef.current.play()
         })
         .catch(err => console.error(err))
+
+        return () => {
+            videoRef.getTracks().forEach(track => {
+                track.stop()
+            })
+        }
     }, [])
 
     return (

@@ -34,8 +34,10 @@ function Stream({ API }) {
     useEffect(() => {
         const fps = crazy ? 2 : 5
         let intervalRef = null
+        let videoRef = null
         navigator.mediaDevices.getUserMedia({ video: true })
         .then(stream => {
+            videoRef = stream
             vidRef.current.srcObject = stream
             vidRef.current.play()
             intervalRef = setInterval(() => {
@@ -50,6 +52,9 @@ function Stream({ API }) {
 
         return () => {
             clearInterval(intervalRef)
+            videoRef.getTracks().forEach(track => {
+                track.stop()
+            })
         }
     }, [crazy])
 

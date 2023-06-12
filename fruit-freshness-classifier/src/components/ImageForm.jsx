@@ -13,7 +13,6 @@ const ImageForm = ({ API }) => {
     setresult("");
     event.preventDefault();
     const imageInput = fileInput.current.files[0];
-    // setImage(imageInput);
 
     const output = document.querySelector("output")
     let imageOutput = "";
@@ -73,4 +72,4 @@ const ImageForm = ({ API }) => {
   );
 };
 
-export default ImageForm
+export default ImageForm;
