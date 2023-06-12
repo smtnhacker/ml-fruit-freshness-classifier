@@ -17,18 +17,23 @@ function App() {
 
   return (
     <div className="container">
-      <h1>FRUIT CLASSIFIER</h1>
-      <span>Upload a photo of a fruit here to determine if it is rotten or not</span>
-      <div>
-        <button onClick={() => setMode(0)}>Upload</button>
-        <button onClick={() => setMode(1)}>Stream</button>
-        <button onClick={() => setMode(2)}>Camera</button>
+      <div className="title-container">
+        <div className="title">FRESH</div>
+        <div className="subtitle">Fruit and Vegetable Ripeness Evaluation System with High accuracy</div>
       </div>
+      <span>Choose a method of uploading an image of a fruit or vegetable and determine if it is fresh or not.</span>
+      <div>
+        <button className="dark-button" onClick={() => setMode(0)}>Upload</button>
+        <button className="dark-button" onClick={() => setMode(1)}>Stream</button>
+        <button className="dark-button" onClick={() => setMode(2)}>Camera</button>
+      </div>
+      <div style={{ padding: '1rem' }}>
       {
           mode == 0 ? <ImageForm API={API} />
         : mode == 1 ? <Stream API={API} />
         : <Camera API={API} />
       }
+      </div>
     </div>
   );
 }

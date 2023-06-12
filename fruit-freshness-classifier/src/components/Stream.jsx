@@ -64,12 +64,15 @@ function Stream({ API }) {
 
     return (
         <div>
-            <video ref={vidRef} style={{ display: 'none' }} />
-            <canvas ref={canRef} width='640' height='360' style={{ display: 'none' }} />
-            { image? <img src={image} style={{ border: `solid 2px rgb${getColor()}`}} /> : 'loading stream...' }
-            <div>{ crazy ? '...' : label > 0.5 ? 'rotten' : 'fresh' }</div>
+            <video ref={vidRef} height="360" width="480" style={{ display: 'none' }} />
+            <canvas ref={canRef} width={480} height={360} style={{ display: 'none' }} />
+            { image? <img src={image} style={{ border: `solid 3px rgb${getColor()}`}} /> : 'loading stream...' }
+            <span style={{ display: 'block' }}>
+                { crazy ? '...' : label > 0.5 ? 'This is most likely: rotten' : 'This is most likely: fresh' }
+            </span>
             {
-                import.meta.env.MODE !== 'production' && <button onClick={() => setCrazy(prev => !prev)}>{crazy ? 'Turn off Object Detection' : 'Turn on Object Detection'}</button>
+                import.meta.env.MODE !== 'production' 
+                && <button className="dark-button" onClick={() => setCrazy(prev => !prev)}>{crazy ? 'Turn off Object Detection' : 'Turn on Object Detection'}</button>
             }
         </div>
     )

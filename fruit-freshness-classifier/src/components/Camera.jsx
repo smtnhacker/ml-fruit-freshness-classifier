@@ -53,18 +53,18 @@ function Camera({ API }) {
                 ? <img src={image} />
                 : <></>
             }
-            <video ref={vidRef} style={{ display: image ? 'none': '' }} />
-            <canvas ref={canRef} width='640' height='360' style={{ display: 'none' }} />
-            { image
-                ? <button onClick={handleRestart}>Again</button>
-                : <button onClick={handleClick}>Take a Picture</button>
-            }
+            <video ref={vidRef} height="360" style={{ display: image ? 'none': '' }} />
+            <canvas ref={canRef} width={480} height={360} style={{ display: 'none' }} />
             <div className="result">
                 {isLoading ? 
                 (<div className="progress-bar"><div className="progress-fill"></div></div>)
                 : 
-                (<span>{result === "" ? "" : result > 0.5 ? "This fruit is most likely: rotten" : "This fruit is most likely: fresh"}</span>)}
+                (<span>{result === "" ? "" : result > 0.5 ? "This is most likely: rotten" : "This is most likely: fresh"}</span>)}
             </div>
+            { image
+                ? <button className="dark-button" onClick={handleRestart}>Again</button>
+                : <button className="dark-button" onClick={handleClick}>Take a Picture</button>
+            }
         </div>
     )
 }

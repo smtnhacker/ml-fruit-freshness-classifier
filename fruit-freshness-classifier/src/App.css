@@ -1,8 +1,29 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+}
+
+.title-container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 0;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 3em;
+  font-weight: bold;
+  line-height: 90%;
+  /* color: #375a7f; */
+}
+
+.subtitle {
+  font-size: 1.2em;
+}
+
+.container span {
+  margin-bottom: 12px;
 }
 
 .form {
@@ -45,4 +66,28 @@ output .image span {
   cursor: pointer;
   font-size: 22px;
   color: white;
+}
+
+.dark-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 4px;
+  color: #ffffff;
+  background-color: #375a7f; /* Bluish color */
+  border: none;
+  transition: background-color 0.3s ease;
+  margin: 4px; /* Updated margin value */
+}
+
+.dark-button:hover {
+  background-color: #4c7f9e; /* Lighter shade of bluish color */
+}
+
+.dark-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
 }
