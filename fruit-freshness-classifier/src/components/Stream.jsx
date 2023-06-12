@@ -2,14 +2,16 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 
 function Stream({ API }) {
-    const [image, setImage] = useState(null);
+    const [crazy, setCrazy] = useState(false)
+    const [image, setImage] = useState(null)
+    const [label, setLabel] = useState([])
     const vidRef = useRef()
     const canRef = useRef()
     
     const processFrame = async (frame) => {
         try {
             const response = await axios.post(
-                `${API}/stream`,
+                `${API}/${crazy ? '' : 'simple_'}stream`,
                 JSON.stringify({ frame: frame }),
                 {
                 headers: {
@@ -17,12 +19,19 @@ function Stream({ API }) {
                 }
                 }
             )
-            setImage(response.data.frame)
+            if (crazy) {
+                setImage(response.data.frame)
+
+            } else {
+                setImage(frame)
+                setLabel(response.data.predictions)
+            }
         } catch (err) {
             console.error(err)
         }
     }
     useEffect(() => {
+        const fps = crazy ? 2 : 5
         let intervalRef = null
         navigator.mediaDevices.getUserMedia({ video: true })
         .then(stream => {
@@ -34,20 +43,34 @@ function Stream({ API }) {
                     const frame = canRef.current.toDataURL('image/jpeg', 0.5)
                     processFrame(frame)
                 }
-            }, 1000/2)
+            }, 1000/fps)
         })
         .catch(err => console.error(err))
 
         return () => {
             clearInterval(intervalRef)
         }
-    }, [])
+    }, [crazy])
+
+    const getColor = () => {
+        if (crazy) {
+            return '(0, 0, 0)'
+        } if (label > 0.5) {
+            return '(255, 0, 0)'
+        } else {
+            return '(0, 255, 0)'
+        }
+    }
 
     return (
         <div>
             <video ref={vidRef} style={{ display: 'none' }} />
             <canvas ref={canRef} width='640' height='360' style={{ display: 'none' }} />
-            { image? <img src={image} /> : 'loading stream...' }
+            { image? <img src={image} style={{ border: `solid 2px rgb${getColor()}`}} /> : 'loading stream...' }
+            <div>{ crazy ? '...' : label > 0.5 ? 'rotten' : 'fresh' }</div>
+            {
+                import.meta.env.MODE !== 'production' && <button onClick={() => setCrazy(prev => !prev)}>{crazy ? 'Turn off Object Detection' : 'Turn on Object Detection'}</button>
+            }
         </div>
     )
 }

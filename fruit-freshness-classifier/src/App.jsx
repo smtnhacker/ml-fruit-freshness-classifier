@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Stream from "./components/Stream";
 import ImageForm from "./components/ImageForm";
 import Camera from "./components/Camera";
@@ -9,6 +9,11 @@ function App() {
   
   const prodAPI = "https://fastapi-production-ea27.up.railway.app"
   const devAPI = "http://127.0.0.1:8000"
+  const API = import.meta.env.MODE !== 'production' ? devAPI : prodAPI
+
+  useEffect(() => {
+    console.log('Environment:', import.meta.env)
+  }, [])
 
   return (
     <div className="container">
@@ -20,9 +25,9 @@ function App() {
         <button onClick={() => setMode(2)}>Camera</button>
       </div>
       {
-          mode == 0 ? <ImageForm API={devAPI} />
-        : mode == 1 ? <Stream API={devAPI} />
-        : <Camera API={devAPI} />
+          mode == 0 ? <ImageForm API={API} />
+        : mode == 1 ? <Stream API={API} />
+        : <Camera API={API} />
       }
     </div>
   );
