@@ -17,6 +17,15 @@
   overflow: hidden  ;
 }
 
+footer {
+  padding: 12px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: #848b9a;
+}
+
 .container {
   width: 600px;
   padding: 2em;

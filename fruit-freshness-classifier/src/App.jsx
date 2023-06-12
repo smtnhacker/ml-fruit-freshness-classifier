@@ -34,6 +34,7 @@ function App() {
         : <Camera API={API} />
       }
       </div>
+      <footer>Copyright 2023 © Michael Angelo Monasterial, Pe Arian Rey, Ron Mikhael Surara, Jedidiah Carl Tan</footer>
     </div>
   );
 }
