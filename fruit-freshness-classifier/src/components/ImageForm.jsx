@@ -87,7 +87,7 @@ const ImageForm = ({ API }) => {
       >
         <output><div {...removeDrag} className="image"><img {...removeDrag} src={imgSrc} /></div></output>
         <input onChange={handleSubmit} ref={fileInput} type="file" name="image" accept="image/*" required style={{display:"none"}}/>
-        <p>Upload image here</p>
+        <p>Click or drag an image here</p>
       </div>
       <div className="result">
         {isLoading ? 
