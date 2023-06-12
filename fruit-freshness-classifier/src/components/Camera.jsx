@@ -14,16 +14,14 @@ function Camera({ API }) {
         setIsLoading(true)
         setResult("")
         try {
-            const response = await axios.post(
-                `${API}/frame`,
-                JSON.stringify({ frame: frame }),
-                {
-                    headers: { "Content-Type": "application/json"}
-                }
-            )
-            setResult(response.data.predictions[0])
+          const response = await axios.post(
+            `${API}/frame`,
+            JSON.stringify({ frame: frame }),
+            { headers: { "Content-Type": "application/json" } }
+          )
+          setResult(response.data.predictions[0]);
         } catch (err) {
-            console.error(err)
+          console.error(err)
         }
         setIsLoading(false)
     }
@@ -57,25 +55,45 @@ function Camera({ API }) {
     }, [])
 
     return (
-        <div>
-            { image  
-                ? <img src={image} />
-                : <></>
-            }
-            <video ref={vidRef} height="360" style={{ display: image ? 'none': '' }} />
-            <canvas ref={canRef} width={480} height={360} style={{ display: 'none' }} />
-            <div className="result">
-                {isLoading ? 
-                (<div className="progress-bar"><div className="progress-fill"></div></div>)
-                : 
-                (<span>{result === "" ? "" : result > 0.5 ? "This is most likely: rotten" : "This is most likely: fresh"}</span>)}
+      <div>
+        {image ? <img src={image} /> : <></>}
+        <video
+          ref={vidRef}
+          height="360"
+          style={{ display: image ? "none" : "" }}
+        />
+        <canvas
+          ref={canRef}
+          width={480}
+          height={360}
+          style={{ display: "none" }}
+        />
+        <div className="result">
+          {isLoading ? (
+            <div className="progress-bar">
+              <div className="progress-fill"></div>
             </div>
-            { image
-                ? <button className="dark-button" onClick={handleRestart}>Again</button>
-                : <button className="dark-button" onClick={handleClick}>Take a Picture</button>
-            }
+          ) : (
+            <span>
+              {result === ""
+                ? ""
+                : result > 0.5
+                ? "This is most likely: rotten"
+                : "This is most likely: fresh"}
+            </span>
+          )}
         </div>
-    )
+        {image ? (
+          <button className="dark-button" onClick={handleRestart}>
+            Again
+          </button>
+        ) : (
+          <button className="dark-button" onClick={handleClick}>
+            Take a Picture
+          </button>
+        )}
+      </div>
+    );
 }
 
 export default Camera

@@ -15,25 +15,21 @@ const ImageForm = ({ API }) => {
     console.log(imageInput)
     setImgSrc(URL.createObjectURL(imageInput))
 
-    const formData = new FormData();
-    formData.append("image", imageInput);
+    const formData = new FormData()
+    formData.append("image", imageInput)
 
     try {
-      const response = await axios.post(
-        `${API}/upload`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await axios.post(`${API}/upload`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
 
-      console.log("Image uploaded successfully", response);
-      console.log(response.data.predictions[0]);
-      setresult(response.data.predictions[0]);
+      console.log("Image uploaded successfully", response)
+      console.log(response.data.predictions[0])
+      setresult(response.data.predictions[0])
     } catch (error) {
-      console.error("Failed to upload image", error);
+      console.error("Failed to upload image", error)
     }
     setIsLoading(false)
   }
@@ -79,25 +75,44 @@ const ImageForm = ({ API }) => {
 
   return (
     <>
-      <div 
+      <div
         className={`form`}
-        onClick={()=> fileInput.current.click()}
+        onClick={() => fileInput.current.click()}
         onDrop={handleDrop}
         onDragOver={handleDragOver}
       >
-        <output><div {...removeDrag} className="image"><img {...removeDrag} src={imgSrc} /></div></output>
-        <input onChange={handleSubmit} ref={fileInput} type="file" name="image" accept="image/*" required style={{display:"none"}}/>
+        <output>
+          <div {...removeDrag} className="image">
+            <img {...removeDrag} src={imgSrc} />
+          </div>
+        </output>
+        <input
+          onChange={handleSubmit}
+          ref={fileInput}
+          type="file"
+          name="image"
+          accept="image/*"
+          required
+          style={{ display: "none" }}
+        />
         <p>Click or drag an image here</p>
       </div>
       <div className="result">
-        {isLoading ? 
-          (<div className="progress-bar"><div className="progress-fill"></div></div>)
-          : 
-          (<span>{result === "" ? "" : result > 0.5 ? "This fruit is most likely: rotten" : "This fruit is most likely: fresh"}</span>)}
+        {isLoading ? (
+          <div className="progress-bar">
+            <div className="progress-fill"></div>
+          </div>
+        ) : (
+          <span>
+            {result === ""
+              ? ""
+              : result > 0.5
+              ? "This fruit is most likely: rotten"
+              : "This fruit is most likely: fresh"}
+          </span>
+        )}
       </div>
-      
     </>
-
   );
 };
 
