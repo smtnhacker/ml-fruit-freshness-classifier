@@ -3,41 +3,62 @@ import axios from "axios";
 
 function Camera({ API }) {
     const [isLoading, setIsLoading] = useState(false)
-    const [result, setresult] = useState("");
+    const [result, setResult] = useState("");
     const [image, setImage] = useState(null);
     const vidRef = useRef()
     const canRef = useRef()
     
     const processPicture = async (frame) => {
+        setImage(frame)
+        setIsLoading(true)
+        setResult("")
         try {
             const response = await axios.post(
-                `${API}/upload`,
+                `${API}/frame`,
                 JSON.stringify({ frame: frame }),
                 {
-                headers: {
-                    "Content-Type": "application/json"
-                }
+                    headers: { "Content-Type": "application/json"}
                 }
             )
-            setImage(response.data.frame)
+            setResult(response.data.predictions[0])
         } catch (err) {
             console.error(err)
         }
+        setIsLoading(false)
     }
+
+    const handleClick = () => {
+        canRef.current.getContext('2d').drawImage(vidRef.current, 0, 0, canRef.current.width, canRef.current.height)
+        const frame = canRef.current.toDataURL('image/jpeg', 0.5)
+        processPicture(frame)
+    }
+
+    const handleRestart = () => {
+        setResult("")
+        setImage(null)
+    }
+
     useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(stream => {
-        vidRef.current.srcObject = stream
-        vidRef.current.play()
-      })
-      .catch(err => console.error(err))
-  }, [])
+        navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+            vidRef.current.srcObject = stream
+            vidRef.current.play()
+        })
+        .catch(err => console.error(err))
+    }, [])
 
     return (
         <div>
-            <video ref={vidRef} />
+            { image  
+                ? <img src={image} />
+                : <></>
+            }
+            <video ref={vidRef} style={{ display: image ? 'none': '' }} />
             <canvas ref={canRef} width='640' height='360' style={{ display: 'none' }} />
-            { image? <img src={image} /> : 'loading stream...' }
+            { image
+                ? <button onClick={handleRestart}>Again</button>
+                : <button onClick={handleClick}>Take a Picture</button>
+            }
             <div className="result">
                 {isLoading ? 
                 (<div className="progress-bar"><div className="progress-fill"></div></div>)

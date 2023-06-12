@@ -22,7 +22,7 @@ function App() {
       {
           mode == 0 ? <ImageForm API={devAPI} />
         : mode == 1 ? <Stream API={devAPI} />
-        : <Camera />
+        : <Camera API={devAPI} />
       }
     </div>
   );

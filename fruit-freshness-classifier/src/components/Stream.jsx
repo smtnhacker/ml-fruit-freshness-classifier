@@ -23,18 +23,25 @@ function Stream({ API }) {
         }
     }
     useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(stream => {
-        vidRef.current.srcObject = stream
-        vidRef.current.play()
-        setInterval(() => {
-          canRef.current.getContext('2d').drawImage(vidRef.current, 0, 0, canRef.current.width, canRef.current.height)
-          const frame = canRef.current.toDataURL('image/jpeg', 0.5)
-          processFrame(frame)
-        }, 1000/2)
-      })
-      .catch(err => console.error(err))
-  }, [])
+        let intervalRef = null
+        navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+            vidRef.current.srcObject = stream
+            vidRef.current.play()
+            intervalRef = setInterval(() => {
+                if (canRef.current) {
+                    canRef.current.getContext('2d').drawImage(vidRef.current, 0, 0, canRef.current.width, canRef.current.height)
+                    const frame = canRef.current.toDataURL('image/jpeg', 0.5)
+                    processFrame(frame)
+                }
+            }, 1000/2)
+        })
+        .catch(err => console.error(err))
+
+        return () => {
+            clearInterval(intervalRef)
+        }
+    }, [])
 
     return (
         <div>
