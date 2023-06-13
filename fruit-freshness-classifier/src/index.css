@@ -13,17 +13,15 @@
   -webkit-text-size-adjust: 100%;
   margin: auto;
   text-align: center;
-
-  overflow: hidden  ;
 }
 
 footer {
   color: #848b9a;
+  width: fit-content;
 }
 
 .container {
-  width: 600px;
-  padding: 2em;
+  margin-top: 1.25em;
   background: #060913;
   border-radius: 20px;
   display: flex;
