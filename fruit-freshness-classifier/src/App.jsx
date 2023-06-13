@@ -20,8 +20,8 @@ function App() {
       <div className="title-container">
         <div className="title">FRESH</div>
         <div className="subtitle">Fruit and Vegetable Ripeness Evaluation System with High accuracy</div>
+        <span>Choose a method of uploading an image of a fruit or vegetable and determine if it is fresh or not.</span>
       </div>
-      <span>Choose a method of uploading an image of a fruit or vegetable and determine if it is fresh or not.</span>
       <div>
         <button className="dark-button" onClick={() => setMode(0)}>Upload</button>
         <button className="dark-button" onClick={() => setMode(1)}>Stream</button>

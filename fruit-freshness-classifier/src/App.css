@@ -7,23 +7,20 @@
 .title-container {
   display: flex;
   flex-direction: column;
-  padding-top: 0;
   margin-bottom: 24px;
+  gap: 12px;
+  width: 34em;
 }
 
+
 .title {
-  font-size: 3em;
+  font-size: 3.5em;
   font-weight: bold;
   line-height: 90%;
-  /* color: #375a7f; */
 }
 
 .subtitle {
-  font-size: 1.2em;
-}
-
-.container span {
-  margin-bottom: 12px;
+  font-size: 1.75em;
 }
 
 .form {
